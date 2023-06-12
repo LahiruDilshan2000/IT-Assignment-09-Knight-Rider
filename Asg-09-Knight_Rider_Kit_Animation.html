@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 1);
+        }
+        .container{
+            display: flex;
+        }
+        .box{
+            width: 80px;
+            height: 30px;
+            margin: 5px;
+            transition: all 0.2s;
+        }
+        .button button{
+            margin: 20px;
+            width: 70px;
+            border: 0;
+            height: 25px;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .button button:first-child{
+            background: #0d6efd;
+        }
+        .button button:last-child{
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+</div>
+<div class="button">
+    <button type="button" id="start">Start</button>
+    <button type="button" id="stop">Stop</button>
+</div>
+<audio src="assets/audio/Knight Rider Sms ! Knight Rider ! Theme.mp3" id="audio"></audio>
+
+<script src="assets/lib/jquery-3.6.4.min.js"></script>
+<script>
+
+    const  box = $('.box');
+
+    var boxIndex = 0;
+    var direction = "Right"
+    var intervalID = null;
+
+
+    $('#start').on('click', () => {
+        $('#audio')[0].play();
+       intervalID = setInterval(setTime,100);
+    });
+    $('#stop').on('click', () => {
+        $('#audio')[0].pause();
+       clearInterval(intervalID)
+    });
+
+    const setTime = () => {
+        $('.box').css({background : "rgba(0, 0, 0, 1)"});
+
+        box[boxIndex].style.background = "red";
+
+        if(boxIndex > 0){
+            box[boxIndex - 1].style.background = "pink";
+        }
+        if(boxIndex < 5){
+            box[boxIndex + 1].style.background = "pink";
+        }
+
+        if(boxIndex === 5){
+            direction = "Left"
+        }
+        if(boxIndex === 0){
+            direction = "Right"
+        }
+
+        if(direction === "Right"){
+            boxIndex ++;
+        }else {
+            boxIndex --;
+        }
+    }
+
+</script>
+</body>
+</html>
